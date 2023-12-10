@@ -21,7 +21,7 @@ By applying a range of statistical methods and data visualization techniques, we
 
 # Methods
 
-To adress our three research questions 
+To adress our three research questions we will need to use multiple statistical methods and data visualizations that we have learned throughout the course. Visual representations to better understand the subtle nuances of first impressions on the dates will be crucial to answering our research questions. More specifically, using ggplot to create these visualizations will be the key. ggplot helps to tell a story about speed dating and in our case a story about our questions: does a person's age or ethnicity sway their dating choices, what qualities are most sought after in these quick meetings, and can we predict if a pair will click? Since we have categorical variables, whether the male or female says "yes" or "no" to another date, we could use ggplot in tangent with geom_bar to create bar graphs to visualize our data. To analyze the data and any relationships that occur between our variable of interest we can use confidence matrices, a ROC curve, and a plot to show coefficient importance. We could also use Machine learning to simplfiy our SpeedDating datset and make it easier to think about how to visualize our data.
 
 <div class="container">
 
