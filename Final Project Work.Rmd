@@ -19,6 +19,10 @@ We anticipate uncovering distinct trends and patterns that reveal gender differe
 
 By applying a range of statistical methods and data visualization techniques, we aim to present a nuanced and comprehensive analysis of speed dating dynamics. Our approach is grounded in a robust statistical framework, leveraging the R programming environment to manipulate, analyze, and visualize the data. Through this exploration, we hope to contribute meaningful insights to the understanding of modern dating behaviors and preferences.
 
+# Methods
+
+To adress our three research questions 
+
 <div class="container">
 
 ```{r setup, echo=FALSE}
