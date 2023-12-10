@@ -7,22 +7,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Introduction
-
-#### Speed Dating Dynamics: An Investigation by Group 6
-
-In this study, we delve into the intriguing world of speed dating, utilizing a comprehensive dataset that captures a myriad of interactions, preferences, and decisions made during speed dating events. The dataset, titled "SpeedDating.csv", is a rich compilation of demographic information, self-reported attributes, and individual preferences of participants engaged in speed dating. It includes data points such as age, gender, interests, and crucially, participants' ratings of their dates across various attributes like attractiveness, sincerity, intelligence, fun, and ambition. Each entry also records the critical decision of whether a participant would like to see their date again, offering a direct insight into dating preferences and choices.
-
-The central aim of our research is to unravel the attributes that significantly influence the decision to date a partner in a speed dating context. Specifically, we seek to understand how attributes like sincerity, fun, intelligence, and notably, physical attractiveness, play a role in the decision-making process of both genders. Our analysis is poised to examine the relationships between gender-specific ratings of these attributes and the likelihood of wanting to pursue a further date.
-
-We anticipate uncovering distinct trends and patterns that reveal gender differences in dating preferences. Preliminary observations suggest that physical attractiveness may be a more critical factor for men than women in deciding whether to date someone. In contrast, we expect to find that women may place relatively higher importance on other attributes like intelligence or sincerity. This investigation aims not only to present a descriptive analysis of the speed dating dynamics but also to offer deeper insights into the underlying factors that drive dating choices in a fast-paced and increasingly popular dating environment.
-
-By applying a range of statistical methods and data visualization techniques, we aim to present a nuanced and comprehensive analysis of speed dating dynamics. Our approach is grounded in a robust statistical framework, leveraging the R programming environment to manipulate, analyze, and visualize the data. Through this exploration, we hope to contribute meaningful insights to the understanding of modern dating behaviors and preferences.
-
-# Methods
-
-To adress our three research questions we will need to use multiple statistical methods and data visualizations that we have learned throughout the course. Visual representations to better understand the subtle nuances of first impressions on the dates will be crucial to answering our research questions. More specifically, using ggplot to create these visualizations will be the key. ggplot helps to tell a story about speed dating and in our case a story about our questions: does a person's age or ethnicity sway their dating choices, what qualities are most sought after in these quick meetings, and can we predict if a pair will click? Since we have categorical variables, whether the male or female says "yes" or "no" to another date, we could use ggplot in tangent with geom_bar to create bar graphs to visualize our data. To analyze the data and any relationships that occur between our variable of interest we can use confidence matrices, a ROC curve, and a plot to show coefficient importance. We could also use Machine learning to simplfiy our SpeedDating datset and make it easier to think about how to visualize our data.
-
 <div class="container">
 
 ```{r setup, echo=FALSE}
@@ -124,47 +108,15 @@ We now see very different behavior in the women's decisions compared to the men'
 
 In conclusion, the data shows that men value physical attractiveness more than women do in a potential partner. However, we should keep in mind that the data was collected from a group of mainly young adults in their twenties and thirties, so this conclusion may not be true for the general population. Nonetheless, this was a very interesting data set to explore for this project.  
 
-```{r cars}
+```{r}
 sd <- read.csv("SpeedDating.csv", header = TRUE)
 sd <- as_tibble(sd)
 glimpse(sd)
 ```
 
-```{r}
-as.double(sd$SincereM)
-glimpse(sd)
-```
 
 ```{r}
-New_sd <- sd%>%
-  filter(!is.na(AttractiveM))%>%
-  filter(!is.na(AttractiveF))%>%
-  filter(!is.na(IntelligentM))%>%
-  filter(!is.na(IntelligentF))%>%
-  filter(!is.na(FunM))%>%
-  filter(!is.na(FunF))%>%
-  filter(!is.na(AmbitiousM))%>%
-  filter(!is.na(AmbitiousF))%>%
-  filter(!is.na(SharedInterestsM))%>%
-  filter(!is.na(SharedInterestsF))%>%
-  filter(!is.na(SincereM))%>%
-  filter(!is.na(SincereF))%>%
-  summarise(Avg_attractiveM = mean(AttractiveM),
-            Avg_attractiveF= mean(AttractiveF),
-            Avg_SincereM = mean(SincereM),
-            Avg_SincereF = mean(SincereF),
-            Avg_IntelligentM = mean(IntelligentM),
-            Avg_IntelligentF = mean(IntelligentF),
-            Avg_FunM = mean(FunM),
-            Avg_FunF = mean(FunF),
-            Avg_AmbitiousM = mean(AmbitiousM),
-            Avg_AmbitiousF = mean(AmbitiousF),
-            Avg_SharedInterestsM = mean(SharedInterestsM),
-            Avg_SharedInterestsF = mean(SharedInterestsF))
-New_sd
-```
-```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x = AttractiveM, fill = factor(DecisionM))) +
   geom_bar() +
   labs(x = "Male rating of Female's attractiveness", 
@@ -173,7 +125,7 @@ sd %>%
 ```
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x = AttractiveF, fill = factor(DecisionF))) +
   geom_bar() +
   labs(x = "Female rating of Male's attractiveness", 
@@ -182,25 +134,27 @@ sd %>%
 ```
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x =IntelligentM , fill = factor(DecisionM))) +
   geom_bar() +
   labs(x = "Male rating of Female Intelligence", 
        title = "Male's Decision based on Female Intelligence")+
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
+
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x = IntelligentF, fill = factor(DecisionF))) +
   geom_bar() +
   labs(x = "Female rating of Male's Intellingence", 
        title = "Female's Decision based on Male Intelligence") +
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
-
+In the above graphs, we can see that intelligence doesn't play a significant role in male decisions to pick a female partner and mostly all the men said yes to females with all kinds of ratings.
+In the case of females though we can see that intelligence can play a significant role in determining a male partner since we can see that mostly females said no to males rated below 5 in intelligence.
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x =FunM , fill = factor(DecisionM))) +
   geom_bar() +
   labs(x = "Male rating on how fun female is", 
@@ -208,18 +162,18 @@ sd %>%
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x = FunF, fill = factor(DecisionF))) +
   geom_bar() +
   labs(x = "Female rating on how fun Male is", 
        title = "Female's Decision based on how fun Male is") +
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
-
+For the Fun attributes we can see that both males and females mostly said no to the partner rated below five. From this, we can conclude that attributes can play a significant role in determining a partner.
 
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x = SincereM, fill = factor(DecisionM))) +
   geom_bar() +
   labs(x = "Male rating on how Sincere female is", 
@@ -228,18 +182,18 @@ sd %>%
 ```
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x = SincereF, fill = factor(DecisionF))) +
   geom_bar() +
   labs(x = "Female rating on how Sincere Male is", 
        title = "Female's Decision based on how Sincere  is") +
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
-
+In the case of the sincere attribute, we can see from the graphs that it's an important attribute in the case of females however in the case of males it seems like it doesn't matter much as most of the males yes to females with even low ratings.
 
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x =AmbitiousM , fill = factor(DecisionM))) +
   geom_bar() +
   labs(x = "Male rating on how Ambitious female is", 
@@ -248,17 +202,17 @@ sd %>%
 ```
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x =AmbitiousF , fill = factor(DecisionF))) +
   geom_bar() +
   labs(x = "Female rating on how Ambitious Male is", 
        title = "Female's Decision based on how Ambitious Male is") +
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
-
+From the above graphs, we can say that the ambitious attribute can play a significant role in determining partner as see that both males and females mostly said no to persons below the rating of five. 
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x =SharedInterestsM , fill = factor(DecisionM))) +
   geom_bar() +
   labs(x = "Male rating on Shared interest with Females", 
@@ -267,15 +221,24 @@ sd %>%
 ```
 
 ```{r}
-sd %>% 
+SpeedDating %>% 
   ggplot(mapping = aes(x =SharedInterestsF, fill = factor(DecisionF))) +
   geom_bar() +
   labs(x = "Female rating on Shared interest with Male", 
        title = "Female's Decision based on Shared interest with Male") +
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
+From the above graphs, we can say that the shared intersect attribute doesn't play a significant in determining the partner. 
+```{r}
+model <- lm(DecisionM ~ LikeM + PartnerYesM + AgeM + AttractiveM + SincereM + IntelligentM + FunM + AmbitiousM + SharedInterestsM, data = sd)
+summary(model)
+```
+```{r}
+model1 <- lm(DecisionF ~ LikeF + PartnerYesF + AgeF + AttractiveF + SincereF + IntelligentF + FunF + AmbitiousF + SharedInterestsF, data = sd)
+summary(model1)
 
-
+```
+We can see that for both male and female attractive attribute has the highest coefficient value therefore we can say that it plays a major role in deciding the partner. However, when we plot the graph we see that no men wanted to date a girl below the rating of 5 in the case of females the rating didn’t have much of an effect on deciding on a dating partner.
 Q. Can we predict the likelihood of a successful match based on the participants' ratings and demographics?
 ```{r}
 library(tidyverse)
@@ -345,7 +308,4 @@ ggplot(coefficients, aes(x = Feature, y = Estimate)) +
   labs(title = "Feature Coefficients", x = "Feature", y = "Coefficient")
 
 ```
-# Conclusion 
-
-Our study was limited by many factors, with the most important one being size. There were only 276 participants, which is not a lot in the world of statistics. And the range of participants was very narrow, meaning that the sample is most likely not very representative of the entire population. The reliability of the data is also in question, since the data comes from people's opinions which are always subjective, which makes working with this type of data more difficult than meticulously collected data in science-based fields. Our analysis was limited by the bivariate data available, with the decision to want a second date being only a "yes" or "no" decision. We feel like our analyses could have been stronger and more interesting if the participants were also asked to rate their chances of wanting another date on a scale of 1-10, instead of a single "yes" or "no." However, we were still able to gain many insights into the deciding factors for people when searching for a partner, and we can supplement our findings with other datasets and studies to get even better at answering our questions. 
 
