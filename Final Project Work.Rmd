@@ -7,6 +7,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Introduction
+
+#### Speed Dating Dynamics: An Investigation by Group 6
+
+In this study, we delve into the intriguing world of speed dating, utilizing a comprehensive dataset that captures a myriad of interactions, preferences, and decisions made during speed dating events. The dataset, titled "SpeedDating.csv", is a rich compilation of demographic information, self-reported attributes, and individual preferences of participants engaged in speed dating. It includes data points such as age, gender, interests, and crucially, participants' ratings of their dates across various attributes like attractiveness, sincerity, intelligence, fun, and ambition. Each entry also records the critical decision of whether a participant would like to see their date again, offering a direct insight into dating preferences and choices.
+
+The central aim of our research is to unravel the attributes that significantly influence the decision to date a partner in a speed dating context. Specifically, we seek to understand how attributes like sincerity, fun, intelligence, and notably, physical attractiveness, play a role in the decision-making process of both genders. Our analysis is poised to examine the relationships between gender-specific ratings of these attributes and the likelihood of wanting to pursue a further date.
+
+We anticipate uncovering distinct trends and patterns that reveal gender differences in dating preferences. Preliminary observations suggest that physical attractiveness may be a more critical factor for men than women in deciding whether to date someone. In contrast, we expect to find that women may place relatively higher importance on other attributes like intelligence or sincerity. This investigation aims not only to present a descriptive analysis of the speed dating dynamics but also to offer deeper insights into the underlying factors that drive dating choices in a fast-paced and increasingly popular dating environment.
+
+By applying a range of statistical methods and data visualization techniques, we aim to present a nuanced and comprehensive analysis of speed dating dynamics. Our approach is grounded in a robust statistical framework, leveraging the R programming environment to manipulate, analyze, and visualize the data. Through this exploration, we hope to contribute meaningful insights to the understanding of modern dating behaviors and preferences.
+
 <div class="container">
 
 ```{r setup, echo=FALSE}
@@ -259,14 +271,6 @@ sd %>%
   scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
 ```
 
-```{r}
-model <- lm(DecisionM ~ LikeM + PartnerYesM + AgeM + AttractiveM + SincereM + IntelligentM + FunM + AmbitiousM + SharedInterestsM, data = sd)
-summary(model)
-```
-```{r}
-model1 <- lm(DecisionF ~ LikeF + PartnerYesF + AgeF + AttractiveF + SincereF + IntelligentF + FunF + AmbitiousF + SharedInterestsF, data = sd)
-summary(model1)
-```
 
 Q. Can we predict the likelihood of a successful match based on the participants' ratings and demographics?
 ```{r}
