@@ -1,0 +1,340 @@
+---
+title: "Speed Dating Dynamics: An Investigation by Group 6"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<div class="container">
+
+```{r setup, echo=FALSE}
+library(tidyverse)
+library(dplyr)
+library(stringr)
+```
+
+
+
+```{r load file, echo=FALSE}
+load("SpeedDating.rda")
+
+head(SpeedDating)
+```
+Question: What attributes (like sincerity, fun, intelligence) most significantly influence the decision to date a partner?
+
+To answer this question we wanted to examine the relationships that existed, if any, between each gender's rating of their dates' attributes and the chances of saying "yes" to wanting another date. Here is an analyses of the results from when we used data visualization to answer the question in regard to the physical attractiveness trait for each person. 
+
+```{r AttractiveM, echo=FALSE}
+
+SpeedDating %>% 
+  ggplot(mapping = aes(x = AttractiveM, fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating of Female's attractiveness", 
+       y = "Count",
+       title = "Male's Decision based on Female Attractiveness") +
+  scale_fill_discrete(name = "Does the Male want \nanother date?", labels = c("No", "Yes"))
+
+```
+
+There are some very interesting conclusions that we can draw from this graph. First, we see the majority of "yes" answers from the men fall around a 7-8 on the physical attractiveness scale of how he would rate the woman. We can also see that no man said he wanted to have another date with a woman that he rated below a 5. Both of these observations suggest that physical attractiveness is an important deciding factor to men when choosing a partner.
+
+
+```{r AttractiveF, echo=FALSE}
+
+SpeedDating %>% 
+  ggplot(mapping = aes(x = AttractiveF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating of Male's attractiveness",
+       y = "Count",
+       title = "Female's Decision based on Male Attractiveness") +
+  scale_fill_discrete(name = "Does the Female want \nanother date?", labels = c("No", "Yes"))
+
+```
+We now see very different behavior in the women's decisions compared to the men's. Notably, some women said "yes" to another date for a man that they rated at the lowest end of the physical attractiveness scale, *and* more women said "no" to men that they would rate around a 7-8 than the men said "no" to women at this level off attraction. These observations imply that women do not consider physical attractiveness to be the most important factor when choosing a partner.
+
+
+In conclusion, the data shows that men value physical attractiveness more than women do in a potential partner. However, we should keep in mind that the data was collected from a group of mainly young adults in their twenties and thirties, so this conclusion may not be true for the general population. Nonetheless, this was a very interesting data set to explore for this project.  
+
+
+
+```{r setup, echo=FALSE}
+library(tidyverse)
+library(dplyr)
+library(stringr)
+
+```
+
+
+
+```{r load file, echo=FALSE}
+load("SpeedDating.rda")
+
+head(SpeedDating)
+```
+Question: What attributes (like sincerity, fun, intelligence) most significantly influence the decision to date a partner?
+
+To answer this question we wanted to examine the relationships that existed, if any, between each gender's rating of their dates' attributes and the chances of saying "yes" to wanting another date. Here is an analyses of the results from when we used data visualization to answer the question in regard to the physical attractiveness trait for each person. 
+
+```{r AttractiveM, echo=FALSE}
+
+SpeedDating %>% 
+  ggplot(mapping = aes(x = AttractiveM, fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating of Female's attractiveness", 
+       y = "Count",
+       title = "Male's Decision based on Female Attractiveness") +
+  scale_fill_discrete(name = "Does the Male want \nanother date?", labels = c("No", "Yes"))
+
+```
+
+There are some very interesting conclusions that we can draw from this graph. First, we see the majority of "yes" answers from the men fall around a 7-8 on the physical attractiveness scale of how he would rate the woman. We can also see that no man said he wanted to have another date with a woman that he rated below a 5. Both of these observations suggest that physical attractiveness is an important deciding factor to men when choosing a partner.
+
+
+```{r AttractiveF, echo=FALSE}
+
+SpeedDating %>% 
+  ggplot(mapping = aes(x = AttractiveF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating of Male's attractiveness",
+       y = "Count",
+       title = "Female's Decision based on Male Attractiveness") +
+  scale_fill_discrete(name = "Does the Female want \nanother date?", labels = c("No", "Yes"))
+
+```
+We now see very different behavior in the women's decisions compared to the men's. Notably, some women said "yes" to another date for a man that they rated at the lowest end of the physical attractiveness scale, *and* more women said "no" to men that they would rate around a 7-8 than the men said "no" to women at this level off attraction. These observations imply that women do not consider physical attractiveness to be the most important factor when choosing a partner.
+
+
+In conclusion, the data shows that men value physical attractiveness more than women do in a potential partner. However, we should keep in mind that the data was collected from a group of mainly young adults in their twenties and thirties, so this conclusion may not be true for the general population. Nonetheless, this was a very interesting data set to explore for this project.  
+
+```{r cars}
+sd <- read.csv("SpeedDating.csv", header = TRUE)
+sd <- as_tibble(sd)
+glimpse(sd)
+```
+
+```{r}
+as.double(sd$SincereM)
+glimpse(sd)
+```
+
+```{r}
+New_sd <- sd%>%
+  filter(!is.na(AttractiveM))%>%
+  filter(!is.na(AttractiveF))%>%
+  filter(!is.na(IntelligentM))%>%
+  filter(!is.na(IntelligentF))%>%
+  filter(!is.na(FunM))%>%
+  filter(!is.na(FunF))%>%
+  filter(!is.na(AmbitiousM))%>%
+  filter(!is.na(AmbitiousF))%>%
+  filter(!is.na(SharedInterestsM))%>%
+  filter(!is.na(SharedInterestsF))%>%
+  filter(!is.na(SincereM))%>%
+  filter(!is.na(SincereF))%>%
+  summarise(Avg_attractiveM = mean(AttractiveM),
+            Avg_attractiveF= mean(AttractiveF),
+            Avg_SincereM = mean(SincereM),
+            Avg_SincereF = mean(SincereF),
+            Avg_IntelligentM = mean(IntelligentM),
+            Avg_IntelligentF = mean(IntelligentF),
+            Avg_FunM = mean(FunM),
+            Avg_FunF = mean(FunF),
+            Avg_AmbitiousM = mean(AmbitiousM),
+            Avg_AmbitiousF = mean(AmbitiousF),
+            Avg_SharedInterestsM = mean(SharedInterestsM),
+            Avg_SharedInterestsF = mean(SharedInterestsF))
+New_sd
+```
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = AttractiveM, fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating of Female's attractiveness", 
+       title = "Male's Decision based on Female Attractiveness") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = AttractiveF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating of Male's attractiveness", 
+       title = "Female's Decision based on Male Attractiveness") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =IntelligentM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating of Female Intelligence", 
+       title = "Male's Decision based on Female Intelligence")+
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = IntelligentF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating of Male's Intellingence", 
+       title = "Female's Decision based on Male Intelligence") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =FunM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on how fun female is", 
+       title = "Male's Decision based on How Fun Female is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = FunF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on how fun Male is", 
+       title = "Female's Decision based on how fun Male is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = SincereM, fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on how Sincere female is", 
+       title = "Male's Decision based on how Sincere female is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = SincereF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on how Sincere Male is", 
+       title = "Female's Decision based on how Sincere  is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =AmbitiousM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on how Ambitious female is", 
+       title = "Male's Decision based on how Ambitious female is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =AmbitiousF , fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on how Ambitious Male is", 
+       title = "Female's Decision based on how Ambitious Male is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =SharedInterestsM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on Shared interest with Females", 
+       title = "Male's Decision based on Shared interest with Females") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =SharedInterestsF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on Shared interest with Male", 
+       title = "Female's Decision based on Shared interest with Male") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+model <- lm(DecisionM ~ LikeM + PartnerYesM + AgeM + AttractiveM + SincereM + IntelligentM + FunM + AmbitiousM + SharedInterestsM, data = sd)
+summary(model)
+```
+```{r}
+model1 <- lm(DecisionF ~ LikeF + PartnerYesF + AgeF + AttractiveF + SincereF + IntelligentF + FunF + AmbitiousF + SharedInterestsF, data = sd)
+summary(model1)
+```
+
+Q. Can we predict the likelihood of a successful match based on the participants' ratings and demographics?
+```{r}
+library(tidyverse)
+library(caret)
+speed_dating_data <- read.csv("SpeedDating.csv")
+speed_dating_data <- speed_dating_data %>%
+  mutate_if(is.numeric, ~ifelse(is.na(.), median(., na.rm = TRUE), .)) %>%
+  mutate_if(is.character, ~ifelse(is.na(.), Mode(.), .)) # Mode function needed
+speed_dating_data$RaceM <- as.factor(speed_dating_data$RaceM)
+speed_dating_data$RaceF <- as.factor(speed_dating_data$RaceF)
+speed_dating_data$Match <- ifelse(speed_dating_data$DecisionM == 1 & speed_dating_data$DecisionF == 1, 1, 0)
+speed_dating_data <- speed_dating_data %>% select(-DecisionM, -DecisionF)
+model_data <- model.matrix(~ . - 1, data = speed_dating_data)
+model_data <- as.data.frame(model_data)
+set.seed(42)
+training_rows <- createDataPartition(model_data$Match, p = 0.7, list = FALSE)
+train_data <- model_data[training_rows, ]
+test_data <- model_data[-training_rows, ]
+model <- glm(Match ~ ., data = train_data, family = "binomial")
+predictions <- predict(model, newdata = test_data, type = "response")
+predicted_classes <- ifelse(predictions > 0.5, 1, 0)
+confusionMatrix(factor(predicted_classes), factor(test_data$Match))
+
+```
+
+```{r}
+library(ggplot2)
+
+conf_matrix <- confusionMatrix(factor(predicted_classes), factor(test_data$Match))
+conf_matrix_df <- as.data.frame(conf_matrix$table)
+
+ggplot(conf_matrix_df, aes(x = Reference, y = Prediction)) +
+  geom_tile(aes(fill = Freq), color = "white") +
+  geom_text(aes(label = Freq), vjust = 1) +
+  scale_fill_gradient(low = "lightblue", high = "blue") +
+  theme_minimal() +
+  labs(title = "Confusion Matrix", x = "Actual Label", y = "Predicted Label") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+ROC Curve and AUC
+```{r}
+library(pROC)
+
+roc_obj <- roc(test_data$Match, predictions)
+auc(roc_obj)
+
+plot(roc_obj, main = "ROC Curve with AUC")
+abline(a = 0, b = 1, col = "red")
+text(0.6, 0.2, paste("AUC =", round(auc(roc_obj), 2)))
+
+
+```
+Coefficient Importance Plot
+
+```{r}
+library(ggplot2)
+coefficients <- as.data.frame(coef(model))
+names(coefficients) <- c("Estimate")
+coefficients$Feature <- rownames(coefficients)
+rownames(coefficients) <- NULL
+ggplot(coefficients, aes(x = Feature, y = Estimate)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  coord_flip() +
+  labs(title = "Feature Coefficients", x = "Feature", y = "Coefficient")
+
+```
+

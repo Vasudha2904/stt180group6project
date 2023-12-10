@@ -1,0 +1,194 @@
+---
+title: "Speed Dating"
+author: "Group 6"
+date: "2023-10-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(infer)
+library(knitr)
+library(broom)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+sd <- read.csv("Speed.csv", header = TRUE)
+sd <- as_tibble(sd)
+glimpse(sd)
+```
+
+
+
+
+```{r}
+as.double(sd$SincereM)
+glimpse(sd)
+```
+
+```{r}
+New_sd <- sd%>%
+  filter(!is.na(AttractiveM))%>%
+  filter(!is.na(AttractiveF))%>%
+  filter(!is.na(IntelligentM))%>%
+  filter(!is.na(IntelligentF))%>%
+  filter(!is.na(FunM))%>%
+  filter(!is.na(FunF))%>%
+  filter(!is.na(AmbitiousM))%>%
+  filter(!is.na(AmbitiousF))%>%
+  filter(!is.na(SharedInterestsM))%>%
+  filter(!is.na(SharedInterestsF))%>%
+  filter(!is.na(SincereM))%>%
+  filter(!is.na(SincereF))%>%
+  summarise(Avg_attractiveM = mean(AttractiveM),
+            Avg_attractiveF= mean(AttractiveF),
+            Avg_SincereM = mean(SincereM),
+            Avg_SincereF = mean(SincereF),
+            Avg_IntelligentM = mean(IntelligentM),
+            Avg_IntelligentF = mean(IntelligentF),
+            Avg_FunM = mean(FunM),
+            Avg_FunF = mean(FunF),
+            Avg_AmbitiousM = mean(AmbitiousM),
+            Avg_AmbitiousF = mean(AmbitiousF),
+            Avg_SharedInterestsM = mean(SharedInterestsM),
+            Avg_SharedInterestsF = mean(SharedInterestsF))
+New_sd
+```
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = AttractiveM, fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating of Female's attractiveness", 
+       title = "Male's Decision based on Female Attractiveness") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = AttractiveF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating of Male's attractiveness", 
+       title = "Female's Decision based on Male Attractiveness") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =IntelligentM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating of Female Intelligence", 
+       title = "Male's Decision based on Female Intelligence")+
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = IntelligentF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating of Male's Intellingence", 
+       title = "Female's Decision based on Male Intelligence") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =FunM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on how fun female is", 
+       title = "Male's Decision based on How Fun Female is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = FunF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on how fun Male is", 
+       title = "Female's Decision based on how fun Male is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = SincereM, fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on how Sincere female is", 
+       title = "Male's Decision based on how Sincere female is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x = SincereF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on how Sincere Male is", 
+       title = "Female's Decision based on how Sincere  is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =AmbitiousM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on how Ambitious female is", 
+       title = "Male's Decision based on how Ambitious female is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =AmbitiousF , fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on how Ambitious Male is", 
+       title = "Female's Decision based on how Ambitious Male is") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =SharedInterestsM , fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating on Shared interest with Females", 
+       title = "Male's Decision based on Shared interest with Females") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+sd %>% 
+  ggplot(mapping = aes(x =SharedInterestsF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating on Shared interest with Male", 
+       title = "Female's Decision based on Shared interest with Male") +
+  scale_fill_discrete(name = "Yes or no", labels = c("No", "Yes"))
+```
+
+```{r}
+model <- lm(DecisionM ~ LikeM + PartnerYesM + AgeM + AttractiveM + SincereM + IntelligentM + FunM + AmbitiousM + SharedInterestsM, data = sd)
+summary(model)
+```
+```{r}
+model1 <- lm(DecisionF ~ LikeF + PartnerYesF + AgeF + AttractiveF + SincereF + IntelligentF + FunF + AmbitiousF + SharedInterestsF, data = sd)
+summary(model1)
+```
+
+
+
+
+```{r}
+##Looking at the coefficients in the summary output. The larger the absolute value of the coefficient, the stronger the influence of that variable on the decision (DecisionM). Positive coefficients indicate a positive relationship, and negative coefficients indicate a negative relationship. The p-values will tell you whether each coefficient is statistically significant.
+```
+
+```{r}
+```
+

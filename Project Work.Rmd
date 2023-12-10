@@ -1,0 +1,77 @@
+---
+title: "project graphs"
+author: ""
+date: ""
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    number_sections: false
+    df_print: paged
+---
+
+```{r setup, echo=FALSE}
+library(tidyverse)
+library(dplyr)
+library(stringr)
+
+```
+
+
+
+```{r load file, echo=FALSE}
+load("C:/Users/beast/Downloads/STT 180/SpeedDating.rda")
+
+head(SpeedDating)
+```
+Question: What attributes (like sincerity, fun, intelligence) most significantly influence the decision to date a partner?
+
+To answer this question we wanted to examine the relationships that existed, if any, between each gender's rating of their dates' attributes and the chances of saying "yes" to wanting another date. Here is an analyses of the results from when we used data visualization to answer the question in regard to the physical attractiveness trait for each person. 
+
+```{r AttractiveM, echo=FALSE}
+
+SpeedDating %>% 
+  ggplot(mapping = aes(x = AttractiveM, fill = factor(DecisionM))) +
+  geom_bar() +
+  labs(x = "Male rating of Female's attractiveness", 
+       y = "Count",
+       title = "Male's Decision based on Female Attractiveness") +
+  scale_fill_discrete(name = "Does the Male want \nanother date?", labels = c("No", "Yes"))
+
+```
+
+There are some very interesting conclusions that we can draw from this graph. First, we see the majority of "yes" answers from the men fall around a 7-8 on the physical attractiveness scale of how he would rate the woman. We can also see that no man said he wanted to have another date with a woman that he rated below a 5. Both of these observations suggest that physical attractiveness is an important deciding factor to men when choosing a partner.
+
+
+```{r AttractiveF, echo=FALSE}
+
+SpeedDating %>% 
+  ggplot(mapping = aes(x = AttractiveF, fill = factor(DecisionF))) +
+  geom_bar() +
+  labs(x = "Female rating of Male's attractiveness",
+       y = "Count",
+       title = "Female's Decision based on Male Attractiveness") +
+  scale_fill_discrete(name = "Does the Female want \nanother date?", labels = c("No", "Yes"))
+
+```
+We now see very different behavior in the women's decisions compared to the men's. Notably, some women said "yes" to another date for a man that they rated at the lowest end of the physical attractiveness scale, *and* more women said "no" to men that they would rate around a 7-8 than the men said "no" to women at this level off attraction. These observations imply that women do not consider physical attractiveness to be the most important factor when choosing a partner.
+
+
+In conclusion, the data shows that men value physical attractiveness more than women do in a potential partner. However, we should keep in mind that the data was collected from a group of mainly young adults in their twenties and thirties, so this conclusion may not be true for the general population. Nonetheless, this was a very interesting data set to explore for this project.   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
