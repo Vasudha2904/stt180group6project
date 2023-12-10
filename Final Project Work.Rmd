@@ -345,4 +345,7 @@ ggplot(coefficients, aes(x = Feature, y = Estimate)) +
   labs(title = "Feature Coefficients", x = "Feature", y = "Coefficient")
 
 ```
+# Conclusion 
+
+Our study was limited by many factors, with the most important one being size. There were only 276 participants, which is not a lot in the world of statistics. And the range of participants was very narrow, meaning that the sample is most likely not very representative of the entire population. The reliability of the data is also in question, since the data comes from people's opinions which are always subjective, which makes working with this type of data more difficult than meticulously collected data in science-based fields. Our analysis was limited by the bivariate data available, with the decision to want a second date being only a "yes" or "no" decision. We feel like our analyses could have been stronger and more interesting if the participants were also asked to rate their chances of wanting another date on a scale of 1-10, instead of a single "yes" or "no." However, we were still able to gain many insights into the deciding factors for people when searching for a partner, and we can supplement our findings with other datasets and studies to get even better at answering our questions. 
 
